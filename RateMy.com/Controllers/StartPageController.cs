@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -22,11 +24,13 @@ namespace RateMy.com.Controllers
 
         public List<ImageForDb> GetImageForDbs()
         {
+            var listOfImageForDb = new List<ImageForDb>();
             var schema = new List<string>();
+
             var connectionString = ConfigurationManager.ConnectionStrings["Mysql"].ConnectionString;
             using (var con = new MySqlConnection(connectionString))
             {
-                const string nameQuery = "SELECT Name FROM Images";
+                const string nameQuery = "SELECT * FROM Images";
 
                 using (var cmd = new MySqlCommand(nameQuery))
                 {
@@ -34,21 +38,33 @@ namespace RateMy.com.Controllers
                     con.Open(); // Open connection
 
                     var reader = cmd.ExecuteReader();
-                    reader.Read();
-                    while (reader.HasRows)
+                    while (reader.Read()) // Start reader
                     {
-                        for (var row = 0; row <= reader.FieldCount; row++)
-                        {
-                            schema.Add(reader.GetString(row)/*reader.GetString(reader.GetOrdinal("Name"))*/);
-                        }
-                        
+
+                        var name = reader["Name"].ToString();
+                        var email = reader["Email"].ToString();
+                        var upVotes = Convert.ToInt32(reader["UpVotes"].ToString());
+                        var downVotes = Convert.ToInt32(reader["DownVotes"].ToString());
+                        var reports = Convert.ToInt32(reader["Reports"].ToString());
+                        var shown = Convert.ToBoolean(reader["Shown"].ToString());
+                        var imageName = reader["ImageName"].ToString();
+                        var imageType = reader["ImageType"].ToString();
+                        var imageFile = reader.GetOrdinal("ImageFile").ToString(); // Problem here
                     }
                     
-
+                    reader.Close(); // Stop reader
                     con.Close(); // Close connection
                 }
             }
             return null;
+        }
+
+        private Image ByteArrayToImage(Byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            ms.Position = 0;
+            Image returnImage = Image.FromStream(ms);
+            return returnImage;
         }
     }
 }

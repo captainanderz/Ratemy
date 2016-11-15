@@ -7,7 +7,7 @@ using System.Web;
 
 namespace RateMy.com.Models
 {
-    public class StartPageViewModel
+    public class StartPageViewModel : LayoutViewModel
     {
         public List<ImageForDb> ImagesWithInfo { get; set; }
 
@@ -15,6 +15,5 @@ namespace RateMy.com.Models
         {
             return Image.FromStream(imageStream);
         }
-        
     }
 }
