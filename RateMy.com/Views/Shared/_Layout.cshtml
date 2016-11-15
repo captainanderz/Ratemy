@@ -1,0 +1,118 @@
+﻿@model RateMy.com.Models.LayoutViewModel
+
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <title>Multiverse by HTML5 UP</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+    <link rel="stylesheet" href="~/Content/css/main.css"/>
+</head>
+<body>
+
+<!-- Wrapper -->
+<div id="wrapper">
+
+    <!-- Header (Header is the bottom bar)-->
+    <header id="header">
+        <h1>
+            <a href="#footer"><strong>Ratemy</strong> by Anders Lindhardt</a>
+        </h1>
+        <nav>
+            <ul>
+                <li>
+                    <a href="#footer" class="icon fa-info-circle">Options</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+
+    <!-- Main -->
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer id="footer" class="panel">
+        <div class="inner split">
+            <div>
+                <section>
+                    <h2>About</h2>
+                    <p>Ratemy.com was a school project. I had 2 weeks to make a simple website focusing on backend code, database and a little design.</p>
+                </section>
+                <section>
+                    <h2>Follow me on ...</h2>
+                    <ul class="icons">
+                        <li>
+                            <a href="https://twitter.com/captainanderz" class="icon fa-twitter">
+                                <span class="label">Twitter</span></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/captainanderz" class="icon fa-github">
+                                <span class="label"></span></a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div>
+                <section>
+                    <h2>Upload</h2>
+                    <div id="result">
+                        
+                    </div>
+                    @using (Html.BeginForm("Upload", "Upload", FormMethod.Post, new {enctype = "multipart/form-data" }))
+                    {
+                        <div class="field half first">
+                            <input required type="text" name="name" id="name" placeholder="Name"/>
+                        </div>
+                        <div class="field half">
+                            <input required type="email" name="email" id="email" placeholder="Email"/>
+                        </div>
+                        <div class="field">
+                            <input required type="file" accept="image/*" name="uploadFile"/>
+                        </div>
+                        <ul class="actions">
+                            <li>
+                                <input type="submit" value="Send" class="special"/>
+                            </li>
+                            <li>
+                                <input type="reset" value="Reset"/>
+                            </li>
+                        </ul>
+                    }
+                </section>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+<!-- Scripts -->
+<script src="~/Content/js/jquery.min.js"></script>
+<script src="~/Content/js/jquery.poptrox.min.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Content/js/skel.min.js"></script>
+<script src="~/Content/js/util.js"></script>
+<script src="~/Content/js/main.js"></script>
+
+@*<script>
+    $(document).on("submit", "form", function (event) {
+        var form = $(this);
+
+        $.ajax({
+            url: this.action,
+            type: this.method,
+            data: $(this).serialize(),
+            success: function (html) {
+                // Do something with the returned html.
+                console.log(html);
+            }
+        });
+
+        event.preventDefault();
+    });
+</script>*@
+
+</body>
+</html>
