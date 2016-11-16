@@ -151,30 +151,37 @@
     <Content Include="Content\CSS_Style_main.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\hover.css" />
-    <Content Include="Content\Images\fulls\01.jpg" />
-    <Content Include="Content\Images\fulls\02.jpg" />
-    <Content Include="Content\Images\fulls\03.jpg" />
-    <Content Include="Content\Images\fulls\04.jpg" />
-    <Content Include="Content\Images\fulls\05.jpg" />
-    <Content Include="Content\Images\fulls\06.jpg" />
-    <Content Include="Content\Images\fulls\07.jpg" />
-    <Content Include="Content\Images\fulls\08.jpg" />
-    <Content Include="Content\Images\fulls\09.jpg" />
-    <Content Include="Content\Images\fulls\10.jpg" />
-    <Content Include="Content\Images\fulls\11.jpg" />
-    <Content Include="Content\Images\fulls\12.jpg" />
-    <Content Include="Content\Images\thumbs\01.jpg" />
-    <Content Include="Content\Images\thumbs\02.jpg" />
-    <Content Include="Content\Images\thumbs\03.jpg" />
-    <Content Include="Content\Images\thumbs\04.jpg" />
-    <Content Include="Content\Images\thumbs\05.jpg" />
-    <Content Include="Content\Images\thumbs\06.jpg" />
-    <Content Include="Content\Images\thumbs\07.jpg" />
-    <Content Include="Content\Images\thumbs\08.jpg" />
-    <Content Include="Content\Images\thumbs\09.jpg" />
-    <Content Include="Content\Images\thumbs\10.jpg" />
-    <Content Include="Content\Images\thumbs\11.jpg" />
-    <Content Include="Content\Images\thumbs\12.jpg" />
+    <Content Include="Content\Images\Fulls\1anders lindhardt.Jpeg" />
+    <Content Include="Content\Images\Fulls\2david dick ham.Jpeg" />
+    <Content Include="Content\Images\Fulls\3anders lindhardt.Jpeg" />
+    <Content Include="Content\Images\Fulls\4CaptAnderz.Jpeg" />
+    <Content Include="Content\Images\Fulls\5Test test.Jpeg" />
+    <Content Include="Content\Images\fulls_Template\01.jpg" />
+    <Content Include="Content\Images\fulls_Template\02.jpg" />
+    <Content Include="Content\Images\fulls_Template\03.jpg" />
+    <Content Include="Content\Images\fulls_Template\04.jpg" />
+    <Content Include="Content\Images\fulls_Template\05.jpg" />
+    <Content Include="Content\Images\fulls_Template\06.jpg" />
+    <Content Include="Content\Images\fulls_Template\07.jpg" />
+    <Content Include="Content\Images\fulls_Template\08.jpg" />
+    <Content Include="Content\Images\fulls_Template\09.jpg" />
+    <Content Include="Content\Images\fulls_Template\10.jpg" />
+    <Content Include="Content\Images\fulls_Template\11.jpg" />
+    <Content Include="Content\Images\fulls_Template\12.jpg" />
+    <Content Include="Content\Images\Rating\Down.png" />
+    <Content Include="Content\Images\Rating\Up.png" />
+    <Content Include="Content\Images\thumbs_Template\01.jpg" />
+    <Content Include="Content\Images\thumbs_Template\02.jpg" />
+    <Content Include="Content\Images\thumbs_Template\03.jpg" />
+    <Content Include="Content\Images\thumbs_Template\04.jpg" />
+    <Content Include="Content\Images\thumbs_Template\05.jpg" />
+    <Content Include="Content\Images\thumbs_Template\06.jpg" />
+    <Content Include="Content\Images\thumbs_Template\07.jpg" />
+    <Content Include="Content\Images\thumbs_Template\08.jpg" />
+    <Content Include="Content\Images\thumbs_Template\09.jpg" />
+    <Content Include="Content\Images\thumbs_Template\10.jpg" />
+    <Content Include="Content\Images\thumbs_Template\11.jpg" />
+    <Content Include="Content\Images\thumbs_Template\12.jpg" />
     <Content Include="Content\js\ie\html5shiv.js" />
     <Content Include="Content\js\ie\respond.min.js" />
     <Content Include="Content\js\jquery.min.js" />
@@ -217,6 +224,7 @@
     </Compile>
     <Compile Include="Models\CommonHelpers.cs" />
     <Compile Include="Models\ImageForDb.cs" />
+    <Compile Include="Models\ImageForWeb.cs" />
     <Compile Include="Models\LayoutViewModel.cs" />
     <Compile Include="Models\StartPageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -242,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Images\Thumbs\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <PropertyGroup>

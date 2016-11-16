@@ -1,15 +1,14 @@
 ﻿@model RateMy.com.Models.StartPageViewModel
-
-@*@foreach (var imagePropertys in Model.ImagesWithInfo)*@
-{
-    <div id="main">
+<div id="main">
+    @foreach (var imagePropertys in Model.ImagesWithInfo)
+    {
         <article class="thumb">
-            <a href="~/Content/images/fulls/01.jpg" class="image"> @* Full image @Model.FullImage(imagePropertys.ImageStream)*@ 
-                <img src="~/Content/images/thumbs/01.jpg" alt="" /> @* Thumb image *@
+            <a href="@imagePropertys.FilePathContentFolder" class="image">
+                @* Full image *@
+                <img src="~/Content/images/thumbs_Template/01.jpg" alt=""/> @* Thumb image *@
             </a>
-            @*<h2>By @imagePropertys.Name</h2>*@
+            <h2>By @imagePropertys.Name</h2>
             @* Upvote/Downvote area *@
-
         </article>
-    </div>
-@*  *@}
+    }
+</div>

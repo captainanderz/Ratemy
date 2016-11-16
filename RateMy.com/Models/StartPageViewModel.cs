@@ -9,7 +9,7 @@ namespace RateMy.com.Models
 {
     public class StartPageViewModel : LayoutViewModel
     {
-        public List<ImageForDb> ImagesWithInfo { get; set; }
+        public List<ImageForWeb> ImagesWithInfo { get; set; }
 
         public Image FullImage(Stream imageStream)
         {
