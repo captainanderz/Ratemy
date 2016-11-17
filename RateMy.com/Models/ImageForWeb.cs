@@ -9,25 +9,25 @@ namespace RateMy.com.Models
 {
     public class ImageForWeb
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public int UpVotes { get; set; }
         public int DownVotes { get; set; }
         public int Reports { get; set; }
-        public bool Shown { get; set; }
         public string ImageName { get; set; }
         public string ImageType { get; set; }
         public Image Image { get; set; }
         public string FilePathContentFolder { get; set; }
 
-        public ImageForWeb(string name, string email, int upVotes, int downVotes, int reports, bool shown, string imageName, string imageType, Image image, string filePathContentFolder)
+        public ImageForWeb(int id, string name, string email, int upVotes, int downVotes, int reports, string imageName, string imageType, Image image, string filePathContentFolder)
         {
+            Id = id;
             Name = name;
             Email = email;
             UpVotes = upVotes;
             DownVotes = downVotes;
             Reports = reports;
-            Shown = shown;
             ImageName = imageName;
             ImageType = imageType;
             Image = image;

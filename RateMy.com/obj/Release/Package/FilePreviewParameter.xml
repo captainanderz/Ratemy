@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="ratemykoala.com" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\L\\Documents\\github\\ratemy\\RateMy\.com\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\L\\Documents\\github\\ratemy\\RateMy\.com\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DefaultConnection-Web.config Connection String" description="" value="data source=.\SQLEXPRESS;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|aspnetdb.mdf;User Instance=true" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\L\\Documents\\github\\ratemy\\RateMy\.com\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DefaultConnection']/@connectionString" />
+  </parameter>
+  <parameter name="Mysql-Web.config Connection String" description="" value="Server=mysql14.unoeuro.com;Port=3306;Database=ratemykoala_com_db;Uid=ratemykoal_com;Pwd=anderh03;" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\L\\Documents\\github\\ratemy\\RateMy\.com\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='Mysql']/@connectionString" />
+  </parameter>
+</parameters>

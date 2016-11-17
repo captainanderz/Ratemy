@@ -18,6 +18,12 @@ namespace RateMy.com
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "StartPage", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Admin",
+                url: "{controller}/{action}/{id}",
+                defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
+            );
         }
     }
 }

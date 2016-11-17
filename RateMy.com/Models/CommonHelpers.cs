@@ -31,7 +31,7 @@ namespace RateMy.com.Models
             return new string(a);
         }
 
-        public List<ImageForWeb> GetImagesForWebFromDb()
+        public List<ImageForWeb> GetImagesForWebFromDb(bool admin)
         {
             var listOfImageForWeb = new List<ImageForWeb>();
 
@@ -52,7 +52,7 @@ namespace RateMy.com.Models
                     var reader = cmd.ExecuteReader();
                     while (reader.Read()) // Start reader
                     {
-                        var id = reader["id"].ToString();
+                        var id = Convert.ToInt32(reader["id"].ToString());
                         var name = reader["Name"].ToString();
                         var email = reader["Email"].ToString();
                         var upVotes = Convert.ToInt32(reader["UpVotes"].ToString());
@@ -67,13 +67,21 @@ namespace RateMy.com.Models
                         if (imageFileBytes == null) continue;
                         var imageFile = Image.FromStream(new MemoryStream(imageFileBytes));
 
-                        // Add image info to returning list
-                        listOfImageForWeb.Add(new ImageForWeb(name, email, upVotes, downVotes, reports, shown, imageName,
-                            imageType, imageFile, GetFullImageFromFolder(id, name)));
-
+                        if (admin && shown == false)
+                        {
+                            // Add image info to returning list
+                            listOfImageForWeb.Add(new ImageForWeb(id, name, email, upVotes, downVotes, reports, imageName,
+                                imageType, imageFile, GetFullImageFromFolder(id.ToString(), name)));
+                        }
+                        else if (admin == false && shown)
+                        {
+                            // Add image info to returning list
+                            listOfImageForWeb.Add(new ImageForWeb(id, name, email, upVotes, downVotes, reports, imageName,
+                                imageType, imageFile, GetFullImageFromFolder(id.ToString(), name)));
+                        }
 
                         // Save save image to folder if not already there
-                        SaveNewImagesFromDbToContentFolder(id, name, imageFile);
+                        SaveNewImagesFromDbToContentFolder(id.ToString(), name, imageFile);
                     }
 
                     reader.Close(); // Stop reader
@@ -95,6 +103,7 @@ namespace RateMy.com.Models
             var images = Directory.EnumerateFiles(HostingEnvironment.MapPath("~/Content/images/Fulls/"))
                 .Select(fn => "~/Content/images/Fulls/" + Path.GetFileName(fn));
 
+            // Trim for HTML
             images = images.Select(x => x.TrimStart(new []{'~', '/'}));
             return images;
         }

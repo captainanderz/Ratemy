@@ -14,7 +14,7 @@ namespace RateMy.com.Controllers
         public ActionResult Index(StartPageViewModel model)
         {
             // Get all images from DB
-            model.ImagesWithInfo = new CommonHelpers().GetImagesForWebFromDb();
+            model.ImagesWithInfo = new CommonHelpers().GetImagesForWebFromDb(false);
 
             return View(model);
         }

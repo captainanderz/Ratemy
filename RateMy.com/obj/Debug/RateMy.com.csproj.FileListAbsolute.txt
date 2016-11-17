@@ -204,3 +204,7 @@ C:\Users\L\Documents\github\ratemy\RateMy.com\bin\System.Web.Mvc.xml
 C:\Users\L\Documents\github\ratemy\RateMy.com\obj\Debug\RateMy.com.csprojResolveAssemblyReference.cache
 C:\Users\L\Documents\github\ratemy\RateMy.com\obj\Debug\RateMy.com.dll
 C:\Users\L\Documents\github\ratemy\RateMy.com\obj\Debug\RateMy.com.pdb
+C:\Users\L\Documents\github\ratemy\RateMy.com\bin\EntityFramework.dll
+C:\Users\L\Documents\github\ratemy\RateMy.com\bin\EntityFramework.SqlServer.dll
+C:\Users\L\Documents\github\ratemy\RateMy.com\bin\EntityFramework.xml
+C:\Users\L\Documents\github\ratemy\RateMy.com\bin\EntityFramework.SqlServer.xml
