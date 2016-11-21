@@ -67,7 +67,10 @@ namespace RateMy.com.Models
                         if (imageFileBytes == null) continue;
 
                         var fullImage = Image.FromStream(new MemoryStream(imageFileBytes));
-                        Image thumbImage = ResizeImage(Image.FromStream(new MemoryStream(imageFileBytes)), 360, 247);
+
+                        Image thumbImage = ResizeImage(fullImage, 360, 247);
+                        //Image resizedTo1200 = ResizeImage(Image.FromStream(new MemoryStream(imageFileBytes)), 1980, 1200); // Resize thumbnail hack
+                        //Image thumbImage = ResizeImage(resizedTo1200, 360, 247);
 
 
                         // Get the right image corresponding to admin or alm user
@@ -152,7 +155,7 @@ namespace RateMy.com.Models
         }
 
         /// <summary>
-        ///     Resize the image to the specified width and height.
+        /// Resize the image to the specified width and height.
         /// </summary>
         /// <param name="image">The image to resize.</param>
         /// <param name="width">The width to resize to.</param>
@@ -160,49 +163,27 @@ namespace RateMy.com.Models
         /// <returns>The resized image.</returns>
         public static Bitmap ResizeImage(Image image, int width, int height)
         {
-            var sourceWidth = image.Width;
-            var sourceHeight = image.Height;
-            var sourceX = 0;
-            var sourceY = 0;
-            var destX = 0;
-            var destY = 0;
+            var destRect = new Rectangle(0, 0, width, height);
+            var destImage = new Bitmap(width, height);
 
-            float nPercent = 0;
-            float nPercentW = 0;
-            float nPercentH = 0;
+            destImage.SetResolution(image.HorizontalResolution, image.VerticalResolution);
 
-            nPercentW = width/(float) sourceWidth;
-            nPercentH = height/(float) sourceHeight;
-            if (nPercentH < nPercentW)
+            using (var graphics = Graphics.FromImage(destImage))
             {
-                nPercent = nPercentH;
-                destX = Convert.ToInt16((width -
-                                         sourceWidth*nPercent)/2);
-            }
-            else
-            {
-                nPercent = nPercentW;
-                destY = Convert.ToInt16((height -
-                                         sourceHeight*nPercent)/2);
+                graphics.CompositingMode = CompositingMode.SourceCopy;
+                graphics.CompositingQuality = CompositingQuality.HighQuality;
+                graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                graphics.SmoothingMode = SmoothingMode.HighQuality;
+                graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+
+                using (var wrapMode = new ImageAttributes())
+                {
+                    wrapMode.SetWrapMode(WrapMode.TileFlipXY);
+                    graphics.DrawImage(image, destRect, 0, 0, image.Width, image.Height, GraphicsUnit.Pixel, wrapMode);
+                }
             }
 
-            var destWidth = (int) (sourceWidth*nPercent);
-            var destHeight = (int) (sourceHeight*nPercent);
-
-            var bmPhoto = new Bitmap(width, height, PixelFormat.Format24bppRgb);
-            bmPhoto.SetResolution(image.HorizontalResolution, image.VerticalResolution);
-
-            var grPhoto = Graphics.FromImage(bmPhoto);
-            grPhoto.Clear(ColorTranslator.FromHtml("#a0a0a1"));
-            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
-
-            grPhoto.DrawImage(image,
-                new Rectangle(destX, destY, destWidth, destHeight),
-                new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
-                GraphicsUnit.Pixel);
-
-            grPhoto.Dispose();
-            return bmPhoto;
+            return destImage;
         }
     }
 }
