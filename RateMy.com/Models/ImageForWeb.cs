@@ -18,9 +18,10 @@ namespace RateMy.com.Models
         public string ImageName { get; set; }
         public string ImageType { get; set; }
         public Image Image { get; set; }
-        public string FilePathContentFolder { get; set; }
+        public string FullImageFilePathContentFolder { get; set; }
+        public string ThumbImageFilePathContentFolder { get; set; }
 
-        public ImageForWeb(int id, string name, string email, int upVotes, int downVotes, int reports, string imageName, string imageType, Image image, string filePathContentFolder)
+        public ImageForWeb(int id, string name, string email, int upVotes, int downVotes, int reports, string imageName, string imageType, Image image, string fullImageFilePathContentFolder, string thumbImageFilePathContentFolder)
         {
             Id = id;
             Name = name;
@@ -31,7 +32,8 @@ namespace RateMy.com.Models
             ImageName = imageName;
             ImageType = imageType;
             Image = image;
-            FilePathContentFolder = filePathContentFolder;
+            FullImageFilePathContentFolder = fullImageFilePathContentFolder;
+            ThumbImageFilePathContentFolder = thumbImageFilePathContentFolder;
         }
     }
 }

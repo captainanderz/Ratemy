@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
@@ -45,8 +46,8 @@ namespace RateMy.com.Models
                     cmd.Connection = con;
                     con.Open(); // Open connection
 
+                    // Setting timeout on mysqlServer
                     var cmdtest = new MySqlCommand("set net_write_timeout=99999; set net_read_timeout=99999", con);
-                        // Setting timeout on mysqlServer
                     cmdtest.ExecuteNonQuery();
 
                     var reader = cmd.ExecuteReader();
@@ -61,27 +62,30 @@ namespace RateMy.com.Models
                         var shown = Convert.ToBoolean(reader["Shown"].ToString());
                         var imageName = reader["ImageName"].ToString();
                         var imageType = reader["ImageType"].ToString();
-
                         var imageFileBytes = (byte[]) reader["ImageFile"];
 
                         if (imageFileBytes == null) continue;
-                        var imageFile = Image.FromStream(new MemoryStream(imageFileBytes));
 
-                        if (admin && shown == false)
+                        var fullImage = Image.FromStream(new MemoryStream(imageFileBytes));
+                        Image thumbImage = ResizeImage(Image.FromStream(new MemoryStream(imageFileBytes)), 360, 247);
+
+
+                        // Get the right image corresponding to admin or alm user
+                        if (admin && (shown == false))
                         {
-                            // Add image info to returning list
                             listOfImageForWeb.Add(new ImageForWeb(id, name, email, upVotes, downVotes, reports, imageName,
-                                imageType, imageFile, GetFullImageFromFolder(id.ToString(), name)));
+                                imageType, fullImage, GetFullImageFromFolder(id, name), GetThumbImageFromFolder(id, name)));
                         }
-                        else if (admin == false && shown)
+                        else if ((admin == false) && shown)
                         {
-                            // Add image info to returning list
                             listOfImageForWeb.Add(new ImageForWeb(id, name, email, upVotes, downVotes, reports, imageName,
-                                imageType, imageFile, GetFullImageFromFolder(id.ToString(), name)));
+                                imageType, fullImage, GetFullImageFromFolder(id, name), GetThumbImageFromFolder(id, name)));
                         }
+                            
 
                         // Save save image to folder if not already there
-                        SaveNewImagesFromDbToContentFolder(id.ToString(), name, imageFile);
+                        SaveNewImagesFromDbToContentFolder(id.ToString(), name, true, fullImage); // Full image
+                        SaveNewImagesFromDbToContentFolder(id.ToString(), name, false, thumbImage); // Thumb image
                     }
 
                     reader.Close(); // Stop reader
@@ -91,9 +95,21 @@ namespace RateMy.com.Models
             return listOfImageForWeb;
         }
 
-        public void SaveNewImagesFromDbToContentFolder(string id, string name, Image image)
+        public void SaveNewImagesFromDbToContentFolder(string id, string name, bool full, Image image)
         {
-            var savePath = HostingEnvironment.MapPath("~/Content/images/Fulls/") + id + name + ".Jpeg";
+            string savePath;
+
+            if (full)
+            {
+                // If full image
+                savePath = HostingEnvironment.MapPath("~/Content/images/Fulls/") + id + name + ".Jpeg";
+            }
+            else
+            {
+                // If thumb image
+                savePath = HostingEnvironment.MapPath("~/Content/images/Thumbs/") + id + name + ".Jpeg";
+            }
+
             if (!File.Exists(savePath))
                 image.Save(savePath, ImageFormat.Jpeg);
         }
@@ -104,16 +120,89 @@ namespace RateMy.com.Models
                 .Select(fn => "~/Content/images/Fulls/" + Path.GetFileName(fn));
 
             // Trim for HTML
-            images = images.Select(x => x.TrimStart(new []{'~', '/'}));
+            images = images.Select(x => x.TrimStart('~', '/'));
             return images;
         }
 
-        public string GetFullImageFromFolder(string id, string name)
+        public IEnumerable<string> GetAllThumbImagesFromFolder()
+        {
+            var images = Directory.EnumerateFiles(HostingEnvironment.MapPath("~/Content/images/Thumbs/"))
+                .Select(fn => "~/Content/images/Thumbs/" + Path.GetFileName(fn));
+
+            // Trim for HTML
+            images = images.Select(x => x.TrimStart('~', '/'));
+            return images;
+        }
+
+        public string GetFullImageFromFolder(int id, string name)
         {
             var images = GetAllFullImagesFromFolder();
-            var image = images.FirstOrDefault(x => x.Contains(id + name));
+            var image = images.FirstOrDefault(x => x.Contains(id.ToString() + name));
+
 
             return image;
+        }
+
+        public string GetThumbImageFromFolder(int id, string name)
+        {
+            var images = GetAllThumbImagesFromFolder();
+            var image = images.FirstOrDefault(x => x.Contains(id.ToString() + name));
+
+            return image;
+        }
+
+        /// <summary>
+        ///     Resize the image to the specified width and height.
+        /// </summary>
+        /// <param name="image">The image to resize.</param>
+        /// <param name="width">The width to resize to.</param>
+        /// <param name="height">The height to resize to.</param>
+        /// <returns>The resized image.</returns>
+        public static Bitmap ResizeImage(Image image, int width, int height)
+        {
+            var sourceWidth = image.Width;
+            var sourceHeight = image.Height;
+            var sourceX = 0;
+            var sourceY = 0;
+            var destX = 0;
+            var destY = 0;
+
+            float nPercent = 0;
+            float nPercentW = 0;
+            float nPercentH = 0;
+
+            nPercentW = width/(float) sourceWidth;
+            nPercentH = height/(float) sourceHeight;
+            if (nPercentH < nPercentW)
+            {
+                nPercent = nPercentH;
+                destX = Convert.ToInt16((width -
+                                         sourceWidth*nPercent)/2);
+            }
+            else
+            {
+                nPercent = nPercentW;
+                destY = Convert.ToInt16((height -
+                                         sourceHeight*nPercent)/2);
+            }
+
+            var destWidth = (int) (sourceWidth*nPercent);
+            var destHeight = (int) (sourceHeight*nPercent);
+
+            var bmPhoto = new Bitmap(width, height, PixelFormat.Format24bppRgb);
+            bmPhoto.SetResolution(image.HorizontalResolution, image.VerticalResolution);
+
+            var grPhoto = Graphics.FromImage(bmPhoto);
+            grPhoto.Clear(ColorTranslator.FromHtml("#a0a0a1"));
+            grPhoto.InterpolationMode = InterpolationMode.HighQualityBicubic;
+
+            grPhoto.DrawImage(image,
+                new Rectangle(destX, destY, destWidth, destHeight),
+                new Rectangle(sourceX, sourceY, sourceWidth, sourceHeight),
+                GraphicsUnit.Pixel);
+
+            grPhoto.Dispose();
+            return bmPhoto;
         }
     }
 }

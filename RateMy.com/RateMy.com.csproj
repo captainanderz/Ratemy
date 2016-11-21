@@ -17,7 +17,7 @@
     <AssemblyName>RateMy.com</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44375</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -159,11 +159,19 @@
     <Content Include="Content\CSS_Style_main.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\hover.css" />
+    <Content Include="Content\Images\Fulls\10Captanderz.Jpeg" />
+    <Content Include="Content\Images\Fulls\11SSL test.Jpeg" />
+    <Content Include="Content\Images\Fulls\12Anders.Jpeg" />
+    <Content Include="Content\Images\Fulls\13Thum.Jpeg" />
     <Content Include="Content\Images\Fulls\1anders lindhardt.Jpeg" />
     <Content Include="Content\Images\Fulls\2david dick ham.Jpeg" />
     <Content Include="Content\Images\Fulls\3anders lindhardt.Jpeg" />
     <Content Include="Content\Images\Fulls\4CaptAnderz.Jpeg" />
     <Content Include="Content\Images\Fulls\5Test test.Jpeg" />
+    <Content Include="Content\Images\Fulls\6Robinhood.Jpeg" />
+    <Content Include="Content\Images\Fulls\7Palle.Jpeg" />
+    <Content Include="Content\Images\Fulls\8CaptAnderz.Jpeg" />
+    <Content Include="Content\Images\Fulls\9Inger Wilhelmsen.Jpeg" />
     <Content Include="Content\Images\fulls_Template\01.jpg" />
     <Content Include="Content\Images\fulls_Template\02.jpg" />
     <Content Include="Content\Images\fulls_Template\03.jpg" />
@@ -178,6 +186,19 @@
     <Content Include="Content\Images\fulls_Template\12.jpg" />
     <Content Include="Content\Images\Rating\Down.png" />
     <Content Include="Content\Images\Rating\Up.png" />
+    <Content Include="Content\Images\Thumbs\10Captanderz.Jpeg" />
+    <Content Include="Content\Images\Thumbs\11SSL test.Jpeg" />
+    <Content Include="Content\Images\Thumbs\12Anders.Jpeg" />
+    <Content Include="Content\Images\Thumbs\13Thum.Jpeg" />
+    <Content Include="Content\Images\Thumbs\1anders lindhardt.Jpeg" />
+    <Content Include="Content\Images\Thumbs\2david dick ham.Jpeg" />
+    <Content Include="Content\Images\Thumbs\3anders lindhardt.Jpeg" />
+    <Content Include="Content\Images\Thumbs\4CaptAnderz.Jpeg" />
+    <Content Include="Content\Images\Thumbs\5Test test.Jpeg" />
+    <Content Include="Content\Images\Thumbs\6Robinhood.Jpeg" />
+    <Content Include="Content\Images\Thumbs\7Palle.Jpeg" />
+    <Content Include="Content\Images\Thumbs\8CaptAnderz.Jpeg" />
+    <Content Include="Content\Images\Thumbs\9Inger Wilhelmsen.Jpeg" />
     <Content Include="Content\Images\thumbs_Template\01.jpg" />
     <Content Include="Content\Images\thumbs_Template\02.jpg" />
     <Content Include="Content\Images\thumbs_Template\03.jpg" />
@@ -233,12 +254,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdminLogin.cs" />
     <Compile Include="Models\AdminViewModel.cs" />
     <Compile Include="Models\CommonHelpers.cs" />
     <Compile Include="Models\ImageForDb.cs" />
     <Compile Include="Models\ImageForWeb.cs" />
     <Compile Include="Models\LayoutViewModel.cs" />
     <Compile Include="Models\StartPageViewModel.cs" />
+    <Compile Include="Models\UploadHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -263,7 +286,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\Thumbs\" />
     <Folder Include="Views\Upload\" />
   </ItemGroup>
   <PropertyGroup>
@@ -281,7 +303,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49339</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49339/</IISUrl>
+          <IISUrl>https://localhost:44375/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
